@@ -14,6 +14,7 @@
                 <form asp-action="Edit">
                     <div asp-validation-summary="ModelOnly" class="text-danger"></div>
                     <input type="hidden" name="TransactionId" value="@Model.TransactionId" />
+                    <input type="hidden" name="UserId" value="@Model.UserId" />
                     <div class="mb-3">
                         <ejs-dropdownlist id="ddlCategory" ejs-for="CategoryId"
                                           dataSource="@ViewBag.Categories" placeholder="Category"

@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using dummySpendit.Models;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Identity;
 
 namespace dummySpendit.Controllers
 {
@@ -14,16 +15,20 @@ namespace dummySpendit.Controllers
     public class CategoryController : Controller
     {
         private readonly ApplicationDbContext _context;
+        private readonly ILogger<HomeController> _logger;
+        private readonly UserManager<IdentityUser> _userManager;
 
-        public CategoryController(ApplicationDbContext context)
+        public CategoryController(ApplicationDbContext context, ILogger<HomeController> logger, UserManager<IdentityUser> userManager)
         {
             _context = context;
+            _logger = logger;
+            _userManager = userManager;
         }
 
         // GET: Category
         public async Task<IActionResult> Index()
         {
-            return View(await _context.Categories.ToListAsync());
+            return View(await _context.Categories.Where(t => t.UserId == _userManager.GetUserId(User)).ToListAsync());
         }
 
         // GET: Category/Details/5
@@ -57,6 +62,7 @@ namespace dummySpendit.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create([Bind("CategoryId,Title,Icon,Type")] Category category)
         {
+            category.UserId = _userManager.GetUserId(User);
             if (ModelState.IsValid)
             {
                 _context.Add(category);
@@ -69,6 +75,7 @@ namespace dummySpendit.Controllers
         // GET: Category/Edit/5
         public async Task<IActionResult> Edit(int? id)
         {
+
             if (id == null)
             {
                 return NotFound();
@@ -89,6 +96,7 @@ namespace dummySpendit.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Edit(int id, [Bind("CategoryId,Title,Icon,Type")] Category category)
         {
+            category.UserId = _userManager.GetUserId(User);
             if (id != category.CategoryId)
             {
                 return NotFound();

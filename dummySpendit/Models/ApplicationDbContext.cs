@@ -21,29 +21,5 @@ namespace dummySpendit.Models
         public DbSet<Transaction> Transactions { get; set; }
         public DbSet<Category> Categories { get; set; }
         public DbSet<SpenditUser> SpenditUsers { get; set;}
-
-        public void filterTransactions()
-        {
-            var temp = Transactions;
-            foreach (Transaction transaction in temp)
-            {
-                if (0 == 1)
-                {
-                    Transactions.Remove(transaction);
-                }
-            }
-        }
-
-        public void filterCategories()
-        {
-            var temp = Categories;
-            foreach (Category category in temp)
-            {
-                if (0 == 1)
-                {
-                    Categories.Remove(category);
-                }
-            }
-        }
     }
 }

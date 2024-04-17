@@ -1,4 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using Microsoft.AspNetCore.Mvc.ModelBinding.Validation;
+using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
 namespace dummySpendit.Models
@@ -7,7 +8,11 @@ namespace dummySpendit.Models
     {
         [Key]
         public int CategoryId { get; set; }
-       
+
+        [Column(TypeName = "nvarchar(450)")]
+        [ValidateNever]
+        public string UserId { get; set; }
+
         [Column(TypeName = "nvarchar(50)")]
         public string Title { get; set; }
 

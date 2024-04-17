@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using dummySpendit.Models;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Identity;
 
 namespace dummySpendit.Controllers
 {
@@ -14,16 +15,20 @@ namespace dummySpendit.Controllers
     public class TransactionController : Controller
     {
         private readonly ApplicationDbContext _context;
+        private readonly ILogger<HomeController> _logger;
+        private readonly UserManager<IdentityUser> _userManager;
 
-        public TransactionController(ApplicationDbContext context)
+        public TransactionController(ApplicationDbContext context, ILogger<HomeController> logger, UserManager<IdentityUser> userManager)
         {
             _context = context;
+            _logger = logger;
+            _userManager = userManager;
         }
 
         // GET: Transaction
         public async Task<IActionResult> Index()
         {
-            var applicationDbContext = _context.Transactions.Include(t => t.category);
+            var applicationDbContext = _context.Transactions.Where(t => t.UserId== _userManager.GetUserId(User)).Include(t => t.category);
             return View(await applicationDbContext.ToListAsync());
         }
 
@@ -62,7 +67,7 @@ namespace dummySpendit.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create([Bind("TransactionId,CategoryId,Amount,Note,Date")] Transaction transaction)
         {
-
+            transaction.UserId = _userManager.GetUserId(User);
             if (ModelState.IsValid)
             {
                 _context.Add(transaction);
@@ -98,6 +103,7 @@ namespace dummySpendit.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Edit(int id, [Bind("TransactionId,CategoryId,Amount,Note,Date")] Transaction transaction)
         {
+            transaction.UserId = _userManager.GetUserId(User);
             if (id != transaction.TransactionId)
             {
                 return NotFound();
@@ -171,7 +177,7 @@ namespace dummySpendit.Controllers
         [NonAction]
         public void PopulateCategories()
         {
-            var CategoryCollection = _context.Categories.ToList();
+            var CategoryCollection = _context.Categories.Where(x=> x.UserId == _userManager.GetUserId(User)).ToList();
             Category DefaultCategory = new Category() { CategoryId = 0, Title = "Choose a Category" };
             CategoryCollection.Insert(0, DefaultCategory);
          

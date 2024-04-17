@@ -1,5 +1,6 @@
 using dummySpendit.Models;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using System.Diagnostics;
@@ -12,11 +13,13 @@ namespace dummySpendit.Controllers
     {
         private readonly ILogger<HomeController> _logger;
         private readonly ApplicationDbContext _context;
+        private readonly UserManager<IdentityUser> _userManager;
 
-        public HomeController(ILogger<HomeController> logger, ApplicationDbContext context)
+        public HomeController(ILogger<HomeController> logger, ApplicationDbContext context, UserManager<IdentityUser> userManager)
         {
             _logger = logger;
             _context = context;
+            _userManager = userManager;
         }
 
         public async Task<ActionResult> Index()
@@ -28,8 +31,8 @@ namespace dummySpendit.Controllers
             //Console.WriteLine(EndDate.ToString());
 
             List<Transaction> SelectedTransactions = await _context.Transactions
-                .Include(x => x.category)
-                .Where(y => y.Date >= StartDate && y.Date <= EndDate)
+            .Include(x => x.category)
+                .Where(y => y.Date >= StartDate && y.Date <= EndDate && y.UserId == _userManager.GetUserId(User))
                 .ToListAsync();
 
             //Console.WriteLine('*');
@@ -130,6 +133,7 @@ namespace dummySpendit.Controllers
                                       };
             //Recent Transactions
             ViewBag.RecentTransactions = await _context.Transactions
+                .Where(h => h.UserId == _userManager.GetUserId(User))
                 .Include(i => i.category)
                 .OrderByDescending(j => j.Date)
                 .Take(10)
