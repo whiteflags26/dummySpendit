@@ -6,9 +6,11 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using dummySpendit.Models;
+using Microsoft.AspNetCore.Authorization;
 
 namespace dummySpendit.Controllers
 {
+    [Authorize]
     public class TransactionController : Controller
     {
         private readonly ApplicationDbContext _context;
@@ -47,6 +49,8 @@ namespace dummySpendit.Controllers
         // GET: Transaction/Create
         public IActionResult Create()
         {
+            PopulateCategories();
+
             ViewData["CategoryId"] = new SelectList(_context.Categories, "CategoryId", "CategoryId");
             return View();
         }
@@ -58,6 +62,7 @@ namespace dummySpendit.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create([Bind("TransactionId,CategoryId,Amount,Note,Date")] Transaction transaction)
         {
+
             if (ModelState.IsValid)
             {
                 _context.Add(transaction);
@@ -71,6 +76,7 @@ namespace dummySpendit.Controllers
         // GET: Transaction/Edit/5
         public async Task<IActionResult> Edit(int? id)
         {
+            PopulateCategories();
             if (id == null)
             {
                 return NotFound();
@@ -121,6 +127,7 @@ namespace dummySpendit.Controllers
             return View(transaction);
         }
 
+
         // GET: Transaction/Delete/5
         public async Task<IActionResult> Delete(int? id)
         {
@@ -158,6 +165,17 @@ namespace dummySpendit.Controllers
         private bool TransactionExists(int id)
         {
             return _context.Transactions.Any(e => e.TransactionId == id);
+        }
+
+
+        [NonAction]
+        public void PopulateCategories()
+        {
+            var CategoryCollection = _context.Categories.ToList();
+            Category DefaultCategory = new Category() { CategoryId = 0, Title = "Choose a Category" };
+            CategoryCollection.Insert(0, DefaultCategory);
+         
+            ViewBag.Categories = CategoryCollection;
         }
     }
 }

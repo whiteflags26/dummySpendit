@@ -4,20 +4,26 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>@ViewData["Title"] - dummySpendit</title>
-    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.css" />
     <!-- Syncfusion ASP.NET Core controls styles -->
-    @*<link rel="stylesheet" href="https://cdn.syncfusion.com/ej2/25.1.35/material.css" />*@
-    <link href="https://cdn.syncfusion.com/ej2/25.1.35/bootstrap5-dark.css" rel="stylesheet" />
+    <link rel="stylesheet" href="https://cdn.syncfusion.com/ej2/25.1.35/bootstrap5.css" />
+    @*<link href="https://cdn.syncfusion.com/ej2/25.1.35/bootstrap5-dark.css" rel="stylesheet" />*@
     <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
     <link rel="stylesheet" href="~/dummySpendit.styles.css" asp-append-version="true" />
     <!-- Syncfusion ASP.NET Core controls scripts -->
     <script src="https://cdn.syncfusion.com/ej2/25.1.35/dist/ej2.min.js"></script>
 </head>
-<body class ="e-bigger">
+<body class="e-bigger bg-light">
+    <!-- Applied bg-light class for a light background -->
     <header>
-        <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
+        <nav class="navbar navbar-expand-lg navbar-toggleable-sm navbar-light bg-primary border-bottom box-shadow mb-3" data-bs-theme="dark">
+            <!-- Applied bg-primary class for a colorful navbar -->
             <div class="container-fluid">
-                <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">dummySpendit</a>
+
+                <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">
+                <img src="~/dummySpendit.png" alt="Site Logo" style="height: 25px; width: auto;" /> Spendit
+                </a> <!-- Applied text-white class for white text -->
+                
                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target=".navbar-collapse" aria-controls="navbarSupportedContent"
                         aria-expanded="false" aria-label="Toggle navigation">
                     <span class="navbar-toggler-icon"></span>
@@ -25,15 +31,20 @@
                 <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
                     <ul class="navbar-nav flex-grow-1">
                         <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
+                            <a class="nav-link" asp-area="" asp-controller="Home" asp-action="Index"><i class="bi bi-menu-button-fill"></i> Dashboard</a> <!-- Applied text-white class for white text -->
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Category" asp-action="Index">Category</a>
+                            <a class="nav-link" asp-area="" asp-controller="Category" asp-action="Index"><i class="bi bi-tags-fill"></i> Category</a> <!-- Applied text-white class for white text -->
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Transaction" asp-action="Index">Transaction</a>
+                            <a class="nav-link" asp-area="" asp-controller="Transaction" asp-action="Index"><i class="bi bi-currency-exchange"></i> Transaction</a> <!-- Applied text-white class for white text -->
                         </li>
                     </ul>
+                    <div class="d-flex">
+                        <!-- Added a new div container for alignment -->
+                        <!-- Adjust the position of _LoginPartial as needed -->
+                        <partial name="_LoginPartial" />
+                    </div>
                 </div>
             </div>
         </nav>
@@ -44,9 +55,10 @@
         </main>
     </div>
 
-    <footer class="border-top footer text-muted">
+    <footer class="border-top footer text-white bg-primary">
+        <!-- Applied text-white and bg-dark classes for white text and a dark background -->
         <div class="container">
-            &copy; 2024 - dummySpendit - <a asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
+            <i class="bi bi-file-code-fill"></i>  2024 - SPL-15 - <a class="text-white" asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a> <!-- Applied text-white class for white text -->
         </div>
     </footer>
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
