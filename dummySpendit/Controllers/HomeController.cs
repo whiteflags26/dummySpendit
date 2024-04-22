@@ -65,6 +65,7 @@ namespace dummySpendit.Controllers
             int AbsoluteBalance = (Balance < 0) ? Balance * -1 : Balance;
 
             ViewBag.Balance = (Balance < 0 ? "-" : "") + AbsoluteBalance.ToString("c0");
+            ViewBag.TrueBalance = Balance.ToString();
 
             //Doughnut Chart - Expense By Category
             ViewBag.DoughnutChartData1 = SelectedTransactions
