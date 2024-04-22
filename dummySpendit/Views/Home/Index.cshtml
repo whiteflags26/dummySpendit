@@ -2,58 +2,85 @@
     ViewData["Title"] = "Dashboard";
 }
 
-<div class="container">
+<div class="container" style="margin-top:50px;">
     <div class="text-center mb-4">
         <!-- Added mb-4 class for bottom margin -->
-        <h1 class="display-4">Budget Overview</h1>
+        <h1 class="display-4" style="font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; color: #333; letter-spacing: 2px;margin-bottom:30px">
+            <b>Budget Overview</b>
+        <!--img src="~/business-strategy.gif" alt="gif image" class="img-fluid" style="max-width: 90px; height: auto;"-->
+        </h1>
     </div>
+
     <div class="row">
         <div class="col-md-4">
             <div class="card">
-                <div class="card-body">
-                    <h5 class="card-title">Total Income</h5>
-                    <!-- Applied Bootstrap classes to make the text colorful -->
-                    <p class="card-text" style="font-size: 24px; font-weight: 600; color: #198754;">@ViewBag.TotalIncome</p>
+                <div class="card-body d-flex justify-content-between align-items-center">
+                    <div style="width: 50%;">
+                        <h5 class="card-title">Total Income</h5>
+                        <!-- Applied Bootstrap classes to make the text colorful -->
+                        <p class="card-text" style="font-size: 24px; font-weight: 600; color: #3498db;">
+                            @ViewBag.TotalIncome
+                        </p>
+                    </div>
+                    <div style="width: 50%;">
+                        <img src="~/energy.gif" alt="gif image" class="img-fluid" style="max-width: 90px; height: auto;">
+                    </div>
                 </div>
             </div>
         </div>
+
         <div class="col-md-4">
             <div class="card">
-                <div class="card-body">
-                    <h5 class="card-title">Total Expense</h5>
-                    <!-- Applied Bootstrap classes to make the text colorful -->
-                    <p class="card-text" style="font-size: 24px; font-weight: 600; color: #DC3545;">@ViewBag.Expense</p>
+                <div class="card-body d-flex justify-content-between align-items-center">
+                    <div style="width: 50%;">
+                        <h5 class="card-title">Total Expense</h5>
+                        <!-- Applied Bootstrap classes to make the text colorful -->
+                        <p class="card-text" style="font-size: 24px; font-weight: 600; color: #eb740e;">@ViewBag.Expense</p>
+                    </div>
+                    <div style="width: 50%;">
+                        <img src="~/low-price.gif" alt="gif image" class="img-fluid" style="max-width: 90px; height: auto;">
+                    </div>
                 </div>
             </div>
         </div>
+
         <div class="col-md-4">
             <div class="card">
-                <div class="card-body">
-                    <h5 class="card-title">Balance</h5>
-                    <!-- Applied Bootstrap classes to make the text colorful -->
-                    <p class="card-text" style="font-size: 24px; font-weight: 600; color: #0D6EFD;">@ViewBag.Balance</p>
+                <div class="card-body d-flex justify-content-between align-items-center">
+                    <div style="width: 50%;">
+                        <h5 class="card-title">Balance</h5>
+                        <!-- Applied Bootstrap classes to make the text colorful -->
+                        <p class="card-text" style="font-size: 24px; font-weight: 600; color: #20c997;">@ViewBag.Balance</p>
+                    </div>
+                    <div style="width: 50%;">
+                        <img src="~/save-money.gif" alt="gif image" class="img-fluid" style="max-width: 90px; height: auto;">
+                    </div>
                 </div>
             </div>
         </div>
     </div>
 </div>
-<p>
 
-</p>
-
+<div class="text-center mb-4" style="margin-top:70px;">
+    <!-- Added mb-4 class for bottom margin -->
+    <h1 class="display-4" style="font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; color: #333;letter-spacing: 2px;margin-bottom:30px">
+        <b>Budget Analytics</b>
+    <!--img src="~/analytics.gif" alt="gif image" class="img-fluid" style="max-width: 90px; height: auto;"-->
+    </h1>
+</div>
 
 @*Doughnut*@
 <div class="row mb-3">
     <div class="col-md-6">
         <div class="widget chart" style="background-color: white;">
-            <div class="p-4">
+            <div class="text-center p-4">
                 <h5 class="fw-bold">Income By Category</h5>
             </div>
             <ejs-accumulationchart id="doughnutchart2" enableSmartLabels background="white">
                 <e-accumulation-series-collection>
                     <e-accumulation-series dataSource="@ViewBag.DoughnutChartData2"
                                            xName="categoryTitleWithIcon" yName="amount"
-                                           innerRadius="40%" legendShape="Circle"
+                                           innerRadius="0%" legendShape="Circle"
                                            palettes=@(new string[]{"#dc3545", "#00ffff", "#f39c12", "#e74c3c","#2c3e50","#ffd700","#2d3142","#3498db","#20c997"})>
                         <e-accumulationseries-datalabel name="formattedAmount" visible></e-accumulationseries-datalabel>
                     </e-accumulation-series>
@@ -68,14 +95,14 @@
 
     <div class="col-md-6">
         <div class="widget chart" style="background-color: white;">
-            <div class="p-4">
+            <div class="text-center p-4">
                 <h5 class="fw-bold">Expense By Category</h5>
             </div>
             <ejs-accumulationchart id="doughnutchart" enableSmartLabels background="white">
                 <e-accumulation-series-collection>
                     <e-accumulation-series dataSource="@ViewBag.DoughnutChartData1"
                                            xName="categoryTitleWithIcon" yName="amount"
-                                           innerRadius="40%" legendShape="Circle"
+                                           innerRadius="0%" legendShape="Circle"
                                            palettes=@(new string[]{"#6f42c1","#ffd700","#2d3142","#3498db","#20c997", "#5e5871", "#00ffff", "#f39c12", "#e74c3c"})>
                         <e-accumulationseries-datalabel name="formattedAmount" visible></e-accumulationseries-datalabel>
                     </e-accumulation-series>
@@ -113,10 +140,10 @@
                 <e-series-collection>
                     <e-series dataSource="@ViewBag.SplineChartData" xName="day" width="3"
                               yName="income" name="Income" type="@Syncfusion.EJ2.Charts.ChartSeriesType.Spline"
-                              splineType="@Syncfusion.EJ2.Charts.SplineType.Natural" fill="#00ffff"></e-series>
+                              splineType="@Syncfusion.EJ2.Charts.SplineType.Natural" fill="#3498db"></e-series>
                     <e-series dataSource="@ViewBag.SplineChartData" xName="day" width="3"
                               yName="expense" name="Expense" type="@Syncfusion.EJ2.Charts.ChartSeriesType.Spline"
-                              splineType="@Syncfusion.EJ2.Charts.SplineType.Natural" fill="#ff5733"></e-series>
+                              splineType="@Syncfusion.EJ2.Charts.SplineType.Natural" fill="#eb740e"></e-series>
                 </e-series-collection>
                 <e-chart-legendsettings position="Top" alignment="Far" toggleVisibility="false">
                     <e-legendsettings-textstyle color="#000" size="1rem"></e-legendsettings-textstyle>
